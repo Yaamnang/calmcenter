@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TherapistNavbar from '@/components/therapist/TherapistNavbar';
 import {
@@ -13,7 +13,8 @@ import {
 } from 'lucide-react';
 import { sessions, chatMessages, quickReplies, ChatMessage } from '@/data/therapistData';
 
-export default function TherapistChatPage() {
+// 1. Separate the logic that uses searchParams into its own component
+function ChatInterface() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session');
@@ -124,23 +125,17 @@ export default function TherapistChatPage() {
 
   if (!currentSession) {
     return (
-      <main className="min-h-screen bg-gray-50">
-        <TherapistNavbar />
-        <div className="flex items-center justify-center h-[calc(100vh-80px)]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
-            <p className="text-dark/60">Loading session...</p>
-          </div>
+      <div className="flex items-center justify-center h-[calc(100vh-80px)]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
+          <p className="text-dark/60">Loading session...</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <TherapistNavbar />
-
-      <div className="flex h-[calc(100vh-80px)]">
+    <div className="flex h-[calc(100vh-80px)]">
       {/* Left Sidebar - Active Sessions */}
       <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-4 border-b border-gray-200">
@@ -411,7 +406,25 @@ export default function TherapistChatPage() {
           </div>
         </div>
       </div>
-      </div>
+    </div>
+  );
+}
+
+// 2. Wrap the component with Suspense in the main export
+export default function TherapistChatPage() {
+  return (
+    <main className="min-h-screen bg-gray-50">
+      <TherapistNavbar />
+      <Suspense fallback={
+        <div className="flex items-center justify-center h-[calc(100vh-80px)]">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
+            <p className="text-dark/60">Loading...</p>
+          </div>
+        </div>
+      }>
+        <ChatInterface />
+      </Suspense>
     </main>
   );
 }
