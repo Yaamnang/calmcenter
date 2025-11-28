@@ -135,8 +135,7 @@ export default function AboutPage() {
               <div className='flex flex-col'>
                   <h3 className="text-3xl font-bold text-dark">Our Story</h3>
               <p className="text-dark/70 text-lg leading-relaxed">
-                ChatGPT said:
-
+       
 MindfulCare began as a simple university project to create a safe, stigma-free space for mental-health support in Bhutan. It’s now a trusted platform offering anonymous access to therapists, secure chats, and helpful resources—all built with privacy, empathy, and accessibility at its core.</p>
               </div>
                <div className="flex flex-row gap-10 items-center justify-between">
