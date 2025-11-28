@@ -77,7 +77,7 @@ export const users: User[] = [
   {
     id: 'U001',
     nickname: 'SilentMountain',
-    email: 'sonamd5dorji@gmail.com',
+    email: 'sonam@gmail.com',
     password: '123',
     ageGroup: '18-25',
     language: 'English',

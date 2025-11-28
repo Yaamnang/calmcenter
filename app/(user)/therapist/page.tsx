@@ -137,22 +137,6 @@ export default function TherapistPage() {
         </div>
       </section>
 
-      
-
-      <style jsx>{`
-        @keyframes spin-slow {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 3s linear infinite;
-        }
-      `}</style>
-
       {/* How it Works */}
       <section className="relative z-10 container mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-sm rounded-3xl p-12 border border-dark/5">
@@ -160,7 +144,7 @@ export default function TherapistPage() {
             How Therapy Sessions Work
           </h2>
 
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-2xl mx-auto">
             <div className="flex items-start gap-4">
               <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 mt-1">
                 <span className="text-accent font-bold">1</span>

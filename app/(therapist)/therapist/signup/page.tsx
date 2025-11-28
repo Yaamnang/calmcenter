@@ -32,6 +32,9 @@ export default function TherapistSignupPage() {
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     if (!formData.email.includes('@')) newErrors.email = 'Invalid email format';
     if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
+    if (!/[a-z]/.test(formData.password) || !/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'Password must contain both uppercase and lowercase letters';
+    }
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     if (!formData.licenseNo.trim()) newErrors.licenseNo = 'License number is required';
     if (!/^\d{4}-\d{4}-\d{3}$/.test(formData.licenseNo)) {

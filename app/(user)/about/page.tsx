@@ -33,7 +33,7 @@ export default function AboutPage() {
       <Navbar />
 
       {/* Intro */}
-      <section className="pt-32 pb-10 px-6">
+      <section className="pt-32 pb-10 px-6 mx-auto max-w-6xl">
         <h1 className="text-5xl font-bold text-dark mb-4">About Us</h1>
         <p className="text-xl text-dark/70 max-w-4xl leading-relaxed">
           At Calm, we believe that no one should face mental health challenges alone.

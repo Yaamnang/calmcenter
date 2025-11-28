@@ -4,6 +4,7 @@ import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import ScribbleCanvas from '@/components/animations/ScribbleCanvas';
 import ChatBot from '@/components/ChatBot';
+import CookieConsent from '@/components/CookieConsent';
 import Link from 'next/link';
 import { useState } from 'react';
 import { UserCircle, MessageCircle, BookOpen, Sparkles } from 'lucide-react';
@@ -223,6 +224,7 @@ export default function LandingPage() {
 
       <Footer />
       <ChatBot />
+      <CookieConsent />
     </main>
   );
 }

@@ -1,19 +1,33 @@
 'use client';
 
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import UserNavbar from '@/components/shared/UserNavbar';
+import UserNavbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import ChatBot from '@/components/ChatBot';
 import Image from 'next/image';
 import therapist1 from '@/assets/therapist1.jpg';
 import therapist2 from '@/assets/therapist2.jpg';
 import therapist3 from '@/assets/therapist3.jpg';
-import { ArrowLeft, GraduationCap, Briefcase, Clock, MapPin, Phone, Mail, Calendar, Award, Languages } from 'lucide-react';
+import { ArrowLeft, GraduationCap, Briefcase, Clock, MapPin, Phone, Mail, Calendar, Award, Languages, X, LogIn } from 'lucide-react';
 
 export default function TherapistDetailPage() {
   const params = useParams();
   const router = useRouter();
   const therapistId = params.id as string;
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleBookSession = () => {
+    setShowLoginModal(true);
+  };
+
+  const handleLogin = () => {
+    router.push('/login');
+  };
+
+  const handleSignup = () => {
+    router.push('/signup');
+  };
 
   // Mock therapist data - replace with actual data fetching
   const therapistData: Record<string, any> = {
@@ -193,6 +207,7 @@ export default function TherapistDetailPage() {
               </div>
 
               <button
+                onClick={handleBookSession}
                 className="px-8 py-3 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:-translate-y-0.5"
                 style={{
                   background: 'linear-gradient(135deg, #f17e65 0%, #FF8700 100%)',
@@ -313,6 +328,56 @@ export default function TherapistDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Login Modal */}
+      {showLoginModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative animate-slide-up">
+            {/* Close button */}
+            <button
+              onClick={() => setShowLoginModal(false)}
+              className="absolute top-4 right-4 text-dark/40 hover:text-dark transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Icon */}
+            <div className="flex justify-center mb-6">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#f17e65] to-[#FF8700] flex items-center justify-center">
+                <LogIn className="w-10 h-10 text-white" />
+              </div>
+            </div>
+
+            {/* Content */}
+            <h2 className="text-3xl font-bold text-dark text-center mb-3">
+              Please Log In
+            </h2>
+            <p className="text-dark/70 text-center mb-8">
+              You need to be logged in to book a session with our therapists. Please log in or create an account to continue.
+            </p>
+
+            {/* Buttons */}
+            <div className="space-y-3">
+              <button
+                onClick={handleLogin}
+                className="w-full py-4 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:-translate-y-0.5"
+                style={{
+                  background: 'linear-gradient(135deg, #f17e65 0%, #FF8700 100%)',
+                }}
+              >
+                Log In
+              </button>
+              <button
+                onClick={handleSignup}
+                className="w-full py-4 bg-gray-100 text-dark font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300"
+              >
+                Create Account
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </main>

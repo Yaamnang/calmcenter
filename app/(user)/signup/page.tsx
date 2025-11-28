@@ -44,6 +44,13 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate password contains both uppercase and lowercase
+    if (!/[a-z]/.test(formData.password) || !/[A-Z]/.test(formData.password)) {
+      alert('Password must contain both uppercase and lowercase letters');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;

@@ -20,24 +20,26 @@ export default function UserNavbar() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          <Link
-            href="/userId/chat"
+           <Link
+            href="/userId/about"
             className="text-dark hover:text-accent transition-colors"
           >
-            Chat
+            About
           </Link>
-          <Link
+            <Link
             href="/userId/therapist"
             className="text-dark hover:text-accent transition-colors"
           >
             Therapists
           </Link>
           <Link
-            href="/userId/about"
+            href="/userId/chat"
             className="text-dark hover:text-accent transition-colors"
           >
-            About
+            Chat
           </Link>
+        
+         
         </div>
 
         {/* Profile Button */}
