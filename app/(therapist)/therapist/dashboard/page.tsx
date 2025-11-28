@@ -29,7 +29,7 @@ import {
 import { getDashboardStats, sessions } from '@/data/therapistData';
 
 export default function TherapistDashboard() {
-  const therapist = { id: 'T001', name: 'Dr. Tashi Dorji' };
+  const therapist = { id: 'T001', name: 'Dr. Nima Dorji' };
   const stats = getDashboardStats(therapist.id);
 
   const todaySessions = sessions.filter(s => s.therapistId === therapist.id);

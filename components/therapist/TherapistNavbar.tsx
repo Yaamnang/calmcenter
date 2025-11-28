@@ -19,7 +19,7 @@ export default function TherapistNavbar() {
           <Link href="/therapist/dashboard" className="flex items-center gap-3">
             <Image src="/logo.png" alt="Calm Logo" width={40} height={40} className="rounded-xl" />
             <div>
-              <h1 className="text-xl font-bold text-dark">Calm</h1>
+              
               <p className="text-xs text-dark/50">Therapist Portal</p>
             </div>
           </Link>
