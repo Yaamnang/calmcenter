@@ -155,7 +155,7 @@ export default function TherapistLoginPage() {
                 />
                 <span className="text-sm text-dark/60">Remember me</span>
               </label>
-              <Link href="#" className="text-sm text-accent hover:text-accent/80 font-medium">
+              <Link href="/therapist/forgot-password" className="text-sm text-accent hover:text-accent/80 font-medium">
                 Forgot password?
               </Link>
             </div>

@@ -33,7 +33,7 @@ export default function TherapistDetailPage() {
   const therapistData: Record<string, any> = {
     T001: {
       id: 'T001',
-      name: 'Dr. Tashi Dorji',
+      name: 'Dr. Pema Choden ',
       image: therapist1,
       specialty: 'Anxiety & Depression',
       title: 'Licensed Clinical Psychologist',
@@ -69,7 +69,7 @@ export default function TherapistDetailPage() {
     },
     T002: {
       id: 'T002',
-      name: 'Dr. Pema Choden',
+      name: 'Dr. Tashi Dorji',
       image: therapist2,
       specialty: 'Relationship Counseling',
       title: 'Licensed Marriage & Family Therapist',
@@ -104,7 +104,7 @@ export default function TherapistDetailPage() {
     },
     T003: {
       id: 'T003',
-      name: 'Dr. Karma Wangchuk',
+      name: 'Dr. Tshering Dema',
       image: therapist3,
       specialty: 'Stress Management',
       title: 'Licensed Mental Health Counselor',
@@ -164,14 +164,14 @@ export default function TherapistDetailPage() {
       <ChatBot />
 
       <div className="container mx-auto px-6 pt-32 pb-20">
-        {/* Back Button */}
+        {/* Back Button
         <button
           onClick={() => router.back()}
           className="flex items-center gap-2 text-dark/70 hover:text-[#f17e65] transition-colors mb-8 group"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
           <span className="font-medium">Back to Therapists</span>
-        </button>
+        </button> */}
 
         {/* Profile Header */}
         <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-8 border border-gray-100">
