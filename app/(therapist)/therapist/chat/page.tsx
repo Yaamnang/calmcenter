@@ -73,7 +73,7 @@ const INITIAL_SESSIONS: Session[] = [
   // --- ACTIVE / WAITING ---
   { 
     id: 'S_ACTIVE', 
-    userNickname: 'Chencho', 
+    userNickname: 'Silent Monkey', 
     status: 'active', 
     context: 'Grief & Loss', 
     startTime: new Date().toISOString(), 
@@ -81,7 +81,7 @@ const INITIAL_SESSIONS: Session[] = [
   },
   { 
     id: 'S_WAITING', 
-    userNickname: 'Pema', 
+    userNickname: 'Anonymous Butterfly', 
     status: 'waiting', 
     context: 'Anxiety Check-in', 
     requestedDate: 'Dec 15, 2024',
