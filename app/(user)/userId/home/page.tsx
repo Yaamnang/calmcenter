@@ -53,7 +53,7 @@ export default function LandingPage() {
           </p>
 
           <div className="flex gap-4 mb-12">
-            <Link href="/register">
+            <Link href="/userId/therapist">
               <button
                 className="text-lg px-16 py-4 mt-2 text-white font-semibold transition-all duration-300 shadow-lg hover:-translate-y-0.5"
                 style={{

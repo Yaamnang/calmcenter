@@ -5,16 +5,16 @@ import Footer from '@/components/shared/Footer';
 import ChatBot from '@/components/ChatBot';
 import Link from 'next/link';
 import Image from 'next/image';
-import therapist1 from '@/assets/therapist1.jpg';
-import therapist2 from '@/assets/therapist2.jpg';
-import therapist3 from '@/assets/therapist3.jpg';
+import therapist1 from '@/assets/therapist1.jpeg';
+import therapist2 from '@/assets/therapist2.jpeg';
+import therapist3 from '@/assets/therapist3.jpeg';
 import { GraduationCap, Languages, Clock } from 'lucide-react';
 
 export default function TherapistPage() {
   const therapists = [
     {
       id: "T001",
-      name: "Dr. Pema Choden",
+      name: "Dr. Ugyen Dorji",
       specialty: "Anxiety & Depression",
       experience: "12 years",
       image: therapist1
@@ -28,7 +28,7 @@ export default function TherapistPage() {
     },
     {
       id: "T003",
-      name: "Dr. Tshering Dema",
+      name: "Dr. Sonam Dorji",
       specialty: "Stress Management",
       experience: "10 years",
       image: therapist3

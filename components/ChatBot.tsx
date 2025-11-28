@@ -14,22 +14,50 @@ const ChatBot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m your support assistant. How can I help you today?',
+      text: 'Hello! Welcome to CalmCenter. I\'m here to listen and support you. How are you feeling today?',
       isUser: false,
       timestamp: new Date(),
     },
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [canSend, setCanSend] = useState(true);
+  const [currentPreQuestions, setCurrentPreQuestions] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatbotService = new ChatbotService();
 
-  const preQuestions = [
-    "What's your return policy?",
-    "How long does shipping take?",
-    "What products do you sell?",
-    "How can I contact support?",
-  ];
+  // Pre-defined question sets for mental health
+  const preQuestionSets = {
+    initial: [
+      "I'm feeling anxious today",
+      "I've been feeling really down",
+      "I'm having trouble sleeping",
+      "I'm feeling overwhelmed"
+    ],
+    followUp1: [
+      "What can I do when I feel anxious?",
+      "How can I improve my mood?",
+      "Any tips for better sleep?",
+      "How to handle stress better?"
+    ],
+    followUp2: [
+      "I need immediate coping strategies",
+      "Should I seek professional help?",
+      "How to practice mindfulness?",
+      "I'm feeling lonely and isolated"
+    ],
+    general: [
+      "Tell me about grounding techniques",
+      "How can I practice self-care?",
+      "What are some breathing exercises?",
+      "How to build a support system?"
+    ]
+  };
+
+  // Initialize with first set of questions from the beginning
+  useEffect(() => {
+    setCurrentPreQuestions(preQuestionSets.initial);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -41,14 +69,23 @@ const ChatBot: React.FC = () => {
 
   const simulateTyping = (callback: () => void) => {
     setIsTyping(true);
+    setCanSend(false);
     setTimeout(() => {
       setIsTyping(false);
+      setCanSend(true);
       callback();
     }, 1500 + Math.random() * 1000);
   };
 
+  const getNextQuestionSet = (currentSet: string[]): string[] => {
+    if (currentSet === preQuestionSets.initial) return preQuestionSets.followUp1;
+    if (currentSet === preQuestionSets.followUp1) return preQuestionSets.followUp2;
+    if (currentSet === preQuestionSets.followUp2) return preQuestionSets.general;
+    return preQuestionSets.general; // Default to general if we run out
+  };
+
   const handleSendMessage = () => {
-    if (inputValue.trim() === '') return;
+    if (inputValue.trim() === '' || !canSend) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -59,6 +96,7 @@ const ChatBot: React.FC = () => {
 
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
+    setCanSend(false);
 
     simulateTyping(() => {
       const botResponse = chatbotService.getResponse(inputValue);
@@ -69,10 +107,15 @@ const ChatBot: React.FC = () => {
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, botMessage]);
+      
+      // Load next set of pre-questions after bot responds
+      setCurrentPreQuestions(getNextQuestionSet(currentPreQuestions));
     });
   };
 
   const handlePreQuestionClick = (question: string) => {
+    if (!canSend) return;
+
     const userMessage: Message = {
       id: Date.now().toString(),
       text: question,
@@ -82,6 +125,7 @@ const ChatBot: React.FC = () => {
 
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
+    setCanSend(false);
 
     simulateTyping(() => {
       const botResponse = chatbotService.getResponse(question);
@@ -92,11 +136,14 @@ const ChatBot: React.FC = () => {
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, botMessage]);
+      
+      // Load next set of pre-questions after bot responds
+      setCurrentPreQuestions(getNextQuestionSet(currentPreQuestions));
     });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && canSend) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -129,7 +176,7 @@ const ChatBot: React.FC = () => {
           <div className="bg-orange-500 text-white p-4 rounded-t-2xl flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
-              <span className="font-semibold">Support Assistant</span>
+              <span className="font-semibold">CalmCenter Support</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -178,15 +225,17 @@ const ChatBot: React.FC = () => {
             </div>
           </div>
 
-          {/* Pre-questions */}
-          {messages.length <= 2 && (
+          {/* Pre-questions - Show from the beginning and always when not typing */}
+          {currentPreQuestions.length > 0 && !isTyping && (
             <div className="px-4 pb-2">
+              <p className="text-xs text-gray-500 mb-2">Suggested questions:</p>
               <div className="grid grid-cols-2 gap-2">
-                {preQuestions.map((question, index) => (
+                {currentPreQuestions.map((question, index) => (
                   <button
                     key={index}
                     onClick={() => handlePreQuestionClick(question)}
-                    className="bg-orange-50 hover:bg-orange-100 text-orange-700 text-xs p-2 rounded-lg transition-colors border border-orange-200 text-left"
+                    disabled={!canSend}
+                    className="bg-orange-50 hover:bg-orange-100 disabled:bg-gray-100 disabled:text-gray-400 text-orange-700 text-xs p-2 rounded-lg transition-colors border border-orange-200 text-left disabled:cursor-not-allowed"
                   >
                     {question}
                   </button>
@@ -203,13 +252,14 @@ const ChatBot: React.FC = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                className="flex-1 border border-orange-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                placeholder={canSend ? "Share what's on your mind..." : "Please wait for response..."}
+                disabled={!canSend}
+                className="flex-1 border border-orange-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
               />
               <button
                 onClick={handleSendMessage}
-                disabled={inputValue.trim() === ''}
-                className="bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white p-2 rounded-full transition-colors disabled:cursor-not-allowed"
+                disabled={inputValue.trim() === '' || !canSend}
+                className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white p-2 rounded-full transition-colors disabled:cursor-not-allowed"
               >
                 <Send size={16} />
               </button>

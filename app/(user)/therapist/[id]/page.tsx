@@ -6,9 +6,9 @@ import UserNavbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import ChatBot from '@/components/ChatBot';
 import Image from 'next/image';
-import therapist1 from '@/assets/therapist1.jpg';
-import therapist2 from '@/assets/therapist2.jpg';
-import therapist3 from '@/assets/therapist3.jpg';
+import therapist1 from '@/assets/therapist1.jpeg';
+import therapist2 from '@/assets/therapist2.jpeg';
+import therapist3 from '@/assets/therapist3.jpeg';
 import { ArrowLeft, GraduationCap, Briefcase, Clock, MapPin, Phone, Mail, Calendar, Award, Languages, X, LogIn } from 'lucide-react';
 
 export default function TherapistDetailPage() {
@@ -33,7 +33,7 @@ export default function TherapistDetailPage() {
   const therapistData: Record<string, any> = {
     T001: {
       id: 'T001',
-      name: 'Dr. Pema Choden ',
+      name: 'Dr. Ugyen Dorji ',
       image: therapist1,
       specialty: 'Anxiety & Depression',
       title: 'Licensed Clinical Psychologist',
@@ -104,7 +104,7 @@ export default function TherapistDetailPage() {
     },
     T003: {
       id: 'T003',
-      name: 'Dr. Tshering Dema',
+      name: 'Dr. Sonam Dorji',
       image: therapist3,
       specialty: 'Stress Management',
       title: 'Licensed Mental Health Counselor',

@@ -12,163 +12,179 @@ export const chatbotData: ChatResponse[] = [
       "howdy", "what's up", "hi there", "hello there"
     ],
     responses: [
-      "Hello! How can I help you today?",
-      "Hi there! What can I do for you?",
-      "Hey! Welcome to our support. How can I assist you?",
-      "Hello! Thanks for reaching out. How can I help?"
+      "Hello! Welcome to CalmCenter. How are you feeling today?",
+      "Hi there! I'm here to listen and support you. How's your day going?",
+      "Hey! Welcome to your safe space. What's on your mind?",
+      "Hello! I'm glad you're here. How can I support you today?"
+    ]
+  },
+  {
+    category: "anxiety",
+    patterns: [
+      "anxious", "anxiety", "panic", "nervous", "worried", "stressed",
+      "overwhelmed", "can't breathe", "heart racing", "panic attack",
+      "feeling anxious", "so anxious", "anxious right now"
+    ],
+    responses: [
+      "I hear you're feeling anxious. Try taking slow, deep breaths with me: breathe in for 4 counts, hold for 4, breathe out for 6.",
+      "Anxiety can feel overwhelming. Remember, this feeling will pass. Would you like to try a grounding exercise?",
+      "It's okay to feel anxious. Let's focus on your breathing together. You're safe right here, right now.",
+      "I understand anxiety can be scary. Try naming 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell, and 1 thing you can taste."
+    ]
+  },
+  {
+    category: "depression",
+    patterns: [
+      "depressed", "depression", "sad", "hopeless", "empty", "numb",
+      "can't get out of bed", "no motivation", "worthless", "useless",
+      "so sad", "feeling down", "really depressed"
+    ],
+    responses: [
+      "I'm sorry you're feeling this way. Depression is really hard. You're not alone in this.",
+      "It takes courage to acknowledge these feelings. Even small steps like reaching out matter.",
+      "Your feelings are valid. Would it help to talk about what's been on your mind?",
+      "Remember that this feeling is temporary, even if it doesn't feel that way right now. You've survived 100% of your bad days so far."
+    ]
+  },
+  {
+    category: "stress",
+    patterns: [
+      "stressed", "stress", "pressure", "burnout", "overwhelmed",
+      "too much pressure", "can't handle", "stressed out", "burned out"
+    ],
+    responses: [
+      "Stress can feel overwhelming. Let's break things down into smaller, manageable pieces.",
+      "Remember to be kind to yourself. You're doing the best you can with what you have right now.",
+      "Would it help to prioritize what absolutely needs to get done today versus what can wait?",
+      "Let's try a quick stress relief technique: tense all your muscles for 5 seconds, then completely relax. Notice the difference."
+    ]
+  },
+  {
+    category: "sleep",
+    patterns: [
+      "can't sleep", "insomnia", "trouble sleeping", "waking up", "nightmares",
+      "restless", "exhausted but can't sleep", "sleep problems"
+    ],
+    responses: [
+      "Sleep struggles can be really tough. Have you tried establishing a relaxing bedtime routine?",
+      "Sometimes listening to calming sounds or doing a body scan meditation can help ease into sleep.",
+      "It might help to avoid screens an hour before bed and try reading or gentle stretching instead.",
+      "Remember that resting quietly with your eyes closed still provides some benefit, even if you're not sleeping."
+    ]
+  },
+  {
+    category: "loneliness",
+    patterns: [
+      "lonely", "alone", "isolated", "no friends", "nobody cares",
+      "feel alone", "so lonely", "isolated", "no one understands"
+    ],
+    responses: [
+      "Loneliness is a painful feeling, and you're brave for acknowledging it. Many people feel this way, even when surrounded by others.",
+      "You matter, and your feelings matter. Would you like to explore some ways to connect with supportive communities?",
+      "It's okay to feel lonely. Remember that this feeling doesn't mean you're alone - I'm here with you right now.",
+      "Loneliness can be incredibly difficult. What's one small step you could take today to reach out to someone?"
+    ]
+  },
+  {
+    category: "self_care",
+    patterns: [
+      "self care", "take care of myself", "how to feel better", "what should I do",
+      "need help coping", "coping strategies", "feel better", "improve mood"
+    ],
+    responses: [
+      "Great that you're thinking about self-care! Even small actions like drinking water or stepping outside can help.",
+      "Self-care looks different for everyone. What usually helps you feel grounded or comforted?",
+      "Remember that self-care isn't selfish - it's essential. What's one kind thing you could do for yourself today?",
+      "Sometimes the simplest self-care is just acknowledging how you feel without judgment. You're doing that right now."
+    ]
+  },
+  {
+    category: "crisis",
+    patterns: [
+      "suicide", "kill myself", "end it all", "don't want to live",
+      "harm myself", "self harm", "hurting myself", "suicidal"
+    ],
+    responses: [
+      "I'm really concerned about what you're sharing. Your life is precious and there are people who want to help.",
+      "Please reach out to a crisis helpline right now. In the US, you can call or text 988 to connect with trained counselors.",
+      "You don't have to go through this alone. Let me help you connect with professional support immediately.",
+      "Your safety is the most important thing. Please call emergency services or a crisis hotline right away. They're there to help 24/7."
+    ]
+  },
+  {
+    category: "mindfulness",
+    patterns: [
+      "mindfulness", "meditation", "stay present", "grounding", "be here now",
+      "anxious thoughts", "racing thoughts", "can't stop thinking"
+    ],
+    responses: [
+      "Let's try a quick mindfulness exercise: Notice your feet on the ground. What sensations do you feel?",
+      "Mindfulness is about observing without judgment. Try naming your thoughts as 'just thoughts' rather than facts.",
+      "When thoughts race, try focusing on your breath. Each inhale and exhale is an anchor to the present moment.",
+      "Grounding techniques can help. Try: What are 3 things you can see? 2 things you can hear? 1 thing you can feel?"
+    ]
+  },
+  {
+    category: "gratitude",
+    patterns: [
+      "grateful", "gratitude", "thankful", "appreciate", "blessed",
+      "looking for positive", "something good", "silver lining"
+    ],
+    responses: [
+      "Practicing gratitude can really shift perspective. What's one small thing you're thankful for today?",
+      "That's wonderful you're thinking about gratitude! Even noticing something simple like a warm drink or comfortable clothes counts.",
+      "Gratitude doesn't mean ignoring hard feelings - it means acknowledging the good alongside the difficult.",
+      "What's something that made you smile recently, no matter how small?"
+    ]
+  },
+  {
+    category: "progress",
+    patterns: [
+      "getting better", "progress", "improving", "healing", "recovery",
+      "doing better", "feeling stronger", "moving forward"
+    ],
+    responses: [
+      "That's amazing to hear! Healing isn't linear, so celebrate every step forward.",
+      "I'm so glad you're noticing progress. Remember to acknowledge how far you've come.",
+      "Progress, no matter how small, is still progress. What's helping you move forward?",
+      "You're doing important work. Be proud of yourself for showing up and trying."
+    ]
+  },
+  {
+    category: "support",
+    patterns: [
+      "therapy", "counseling", "professional help", "therapist", "counselor",
+      "need therapy", "should I get help", "mental health professional"
+    ],
+    responses: [
+      "Seeking professional support is a brave and important step. Therapy can provide valuable tools and perspectives.",
+      "There are many types of mental health professionals who can help. Would you like information about finding the right fit?",
+      "Therapy looks different for everyone. It's about finding what works for you in a safe, supportive space.",
+      "Remember that asking for professional help is a sign of strength, not weakness. It means you're taking your wellbeing seriously."
     ]
   },
   {
     category: "farewell",
     patterns: [
       "bye", "goodbye", "see you", "see ya", "take care", "have a good day",
-      "cya", "later", "bye bye", "good night"
+      "cya", "later", "bye bye", "good night", "I'm done", "that's all"
     ],
     responses: [
-      "Goodbye! Have a great day!",
-      "See you later! Feel free to come back if you have more questions.",
-      "Take care! We're here if you need anything else.",
-      "Bye! Thanks for chatting with us!"
-    ]
-  },
-  {
-    category: "help",
-    patterns: [
-      "help", "support", "can you help", "need help", "assist me",
-      "what can you do", "how does this work", "help me"
-    ],
-    responses: [
-      "I'm here to help! You can ask me about our products, services, shipping, returns, or anything else.",
-      "I'd be happy to help! What do you need assistance with?",
-      "Sure! I can help with product information, orders, shipping, and more. What do you need?",
-      "I'm here to assist you! Feel free to ask any questions about our services."
-    ]
-  },
-  {
-    category: "shipping",
-    patterns: [
-      "shipping", "delivery", "when will it arrive", "shipping time",
-      "how long shipping", "delivery time", "when shipped", "track order",
-      "shipping cost", "free shipping"
-    ],
-    responses: [
-      "We offer free standard shipping on orders over $50. Standard shipping takes 3-5 business days.",
-      "Shipping typically takes 2-7 business days depending on your location. Express shipping is available.",
-      "You can track your order using the tracking link in your confirmation email.",
-      "Standard shipping: 3-5 days, Express: 1-2 days, Overnight: next business day."
-    ]
-  },
-  {
-    category: "returns",
-    patterns: [
-      "return", "refund", "exchange", "return policy", "how to return",
-      "can I return", "return item", "refund policy", "money back"
-    ],
-    responses: [
-      "We have a 30-day return policy. Items must be unused with original tags.",
-      "You can return items within 30 days of delivery for a full refund.",
-      "Returns are easy! Just contact support and we'll send you a return label.",
-      "Our return policy allows returns within 30 days. Some items may be final sale."
-    ]
-  },
-  {
-    category: "products",
-    patterns: [
-      "products", "items", "what do you sell", "catalog", "inventory",
-      "available products", "product range", "merchandise"
-    ],
-    responses: [
-      "We offer a wide range of products including electronics, home goods, and fashion items.",
-      "Our catalog includes electronics, clothing, home decor, and accessories.",
-      "We have products in categories like electronics, fashion, home, and beauty.",
-      "You can browse our complete catalog on our website. Is there a specific category you're interested in?"
-    ]
-  },
-  {
-    category: "pricing",
-    patterns: [
-      "price", "cost", "how much", "pricing", "discount", "sale",
-      "expensive", "cheap", "affordable", "price range"
-    ],
-    responses: [
-      "Our prices are competitive and we regularly run sales and promotions.",
-      "We offer products at various price points to suit different budgets.",
-      "Check our website for current pricing and any ongoing sales.",
-      "We have a range of products from budget-friendly to premium options."
-    ]
-  },
-  {
-    category: "contact",
-    patterns: [
-      "contact", "phone number", "email", "call", "speak to someone",
-      "customer service", "support phone", "live person", "talk to agent"
-    ],
-    responses: [
-      "You can reach us at support@company.com or call 1-800-123-4567.",
-      "Our customer service team is available Mon-Fri 9AM-6PM at 1-800-123-4567.",
-      "Contact us via email at support@company.com or through our contact form.",
-      "We're here to help! Call us at 1-800-123-4567 or email support@company.com."
-    ]
-  },
-  {
-    category: "website",
-    patterns: [
-      "website", "site", "online", "web address", "url",
-      "where to buy", "how to order", "online store", "ecommerce"
-    ],
-    responses: [
-      "You can shop on our website at www.company.com",
-      "Visit www.company.com to browse our full catalog and place orders.",
-      "Our online store is available 24/7 at www.company.com",
-      "Shop easily at www.company.com with secure checkout and fast shipping."
-    ]
-  },
-  {
-    category: "technical",
-    patterns: [
-      "not working", "broken", "defective", "issue", "problem",
-      "error", "bug", "technical issue", "malfunction", "defect"
-    ],
-    responses: [
-      "I'm sorry you're having issues. Please contact our technical support team for assistance.",
-      "For technical issues, please reach out to our support team with details about the problem.",
-      "Let me connect you with our technical team. They'll help resolve the issue quickly.",
-      "I understand the frustration. Our technical team can help - contact them with specific details."
-    ]
-  },
-  {
-    category: "thanks",
-    patterns: [
-      "thanks", "thank you", "appreciate", "thx", "thank you so much",
-      "thanks a lot", "grateful", "appreciation"
-    ],
-    responses: [
-      "You're welcome! Happy to help.",
-      "My pleasure! Let me know if you need anything else.",
-      "You're very welcome! Have a great day.",
-      "Glad I could help! Don't hesitate to reach out again."
-    ]
-  },
-  {
-    category: "hours",
-    patterns: [
-      "hours", "open", "closed", "business hours", "when are you open",
-      "operating hours", "store hours", "working hours"
-    ],
-    responses: [
-      "We're open Monday-Friday 9AM-6PM and Saturday 10AM-4PM (EST).",
-      "Our business hours are Mon-Fri 9AM-6PM, Sat 10AM-4PM. Closed Sundays.",
-      "You can reach us Monday through Friday, 9AM to 6PM Eastern Time.",
-      "Our support team is available Mon-Fri 9AM-6PM EST."
+      "Take care of yourself. Remember I'm here whenever you need to talk.",
+      "Goodbye! Be gentle with yourself today.",
+      "See you later! You're always welcome back here.",
+      "Take care. Remember to do one kind thing for yourself today."
     ]
   }
 ];
 
 export const defaultResponses = [
-  "I'm not sure I understand. Could you rephrase that?",
-  "That's an interesting question. Let me connect you with more specific information.",
-  "I'm still learning! Could you try asking that in a different way?",
-  "I don't have the exact answer for that, but our support team can help!",
-  "Let me think about that... Could you provide more details?",
-  "I want to make sure I give you the right information. Could you clarify your question?"
+  "Thank you for sharing that with me. How does that feel to talk about?",
+  "I hear you. Would you like to explore that feeling more together?",
+  "That sounds really difficult. I'm here with you in this.",
+  "Your feelings are valid. What do you need most right now?",
+  "I'm listening. Take your time - there's no rush.",
+  "Thank you for trusting me with this. How can I best support you right now?",
+  "That sounds challenging. What's been helping you get through this?",
+  "I appreciate you sharing that. What would feel supportive to explore next?"
 ];
