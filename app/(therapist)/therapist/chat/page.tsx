@@ -21,9 +21,32 @@ import {
   ChevronDown
 } from 'lucide-react';
 
+// --- TYPE DEFINITIONS ---
+interface Session {
+  id: string;
+  userNickname: string;
+  status: 'active' | 'waiting' | 'completed';
+  context: string;
+  therapistNotes: string;
+  // Optional properties depending on status
+  startTime?: string;
+  requestedDate?: string;
+  requestedTime?: string;
+  endedTime?: string;
+}
+
+interface ChatMessage {
+  id: number;
+  sender: 'user' | 'therapist';
+  type: 'text' | 'file';
+  text: string;
+  fileUrl?: string;
+  fileType?: 'image' | 'doc';
+}
+
 // --- MOCK DATA ---
 
-const MOCK_CHAT_HISTORY = {
+const MOCK_CHAT_HISTORY: Record<string, ChatMessage[]> = {
   'S_ACTIVE': [
     { id: 1, sender: 'user', type: 'text', text: "Hi doctor, I'm feeling really low today." },
     { id: 2, sender: 'user', type: 'text', text: "I can't seem to find any motivation." }
@@ -46,7 +69,7 @@ const MOCK_CHAT_HISTORY = {
   ]
 };
 
-const INITIAL_SESSIONS = [
+const INITIAL_SESSIONS: Session[] = [
   // --- ACTIVE / WAITING ---
   { 
     id: 'S_ACTIVE', 
@@ -65,7 +88,7 @@ const INITIAL_SESSIONS = [
     requestedTime: '10:00 AM', 
     therapistNotes: '' 
   },
-  // --- PAST APPOINTMENTS (Added more to make it scrollable) ---
+  // --- PAST APPOINTMENTS ---
   {
     id: 'S_PAST_1',
     userNickname: 'Dorji',
@@ -112,10 +135,10 @@ function ChatInterface() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // State
-  const [sessions, setSessions] = useState(INITIAL_SESSIONS);
-  const [currentSession, setCurrentSession] = useState<any>(sessions[0]);
-  const [messages, setMessages] = useState<any[]>(MOCK_CHAT_HISTORY['S_ACTIVE']);
+  // State with explicit Session[] type
+  const [sessions, setSessions] = useState<Session[]>(INITIAL_SESSIONS);
+  const [currentSession, setCurrentSession] = useState<Session>(sessions[0]);
+  const [messages, setMessages] = useState<ChatMessage[]>(MOCK_CHAT_HISTORY['S_ACTIVE']);
   
   const [inputValue, setInputValue] = useState('');
   const [sessionNotes, setSessionNotes] = useState(sessions[0].therapistNotes);
@@ -135,7 +158,6 @@ function ChatInterface() {
     if (currentSession) {
       setSessionNotes(currentSession.therapistNotes || '');
       // Load specific chat history for this user
-      // @ts-ignore
       setMessages(MOCK_CHAT_HISTORY[currentSession.id] || []);
     }
   }, [currentSession]);
@@ -153,7 +175,7 @@ function ChatInterface() {
       const randomGrief = GRIEF_MESSAGES[Math.floor(Math.random() * GRIEF_MESSAGES.length)];
 
       const timeout = setTimeout(() => {
-        const griefMsg = {
+        const griefMsg: ChatMessage = {
           id: Date.now(),
           sender: 'user',
           type: 'text',
@@ -173,7 +195,7 @@ function ChatInterface() {
   const handleSendMessage = () => {
     if (!inputValue.trim() || !currentSession) return;
 
-    const newMsg = {
+    const newMsg: ChatMessage = {
       id: Date.now(),
       sender: 'therapist',
       type: 'text',
@@ -190,7 +212,7 @@ function ChatInterface() {
       const isImage = file.type.startsWith('image/');
       const fileUrl = URL.createObjectURL(file); 
 
-      const newFileMsg = {
+      const newFileMsg: ChatMessage = {
         id: Date.now(),
         sender: 'therapist',
         type: 'file',
@@ -217,7 +239,7 @@ function ChatInterface() {
       // Move to completed
       const updatedSessions = sessions.map(s => 
         s.id === currentSession.id 
-          ? { ...s, status: 'completed', endedTime: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) } 
+          ? { ...s, status: 'completed', endedTime: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) } as Session
           : s
       );
       setSessions(updatedSessions);
@@ -226,6 +248,7 @@ function ChatInterface() {
       if (nextActive) {
         setCurrentSession(nextActive);
       } else {
+        // If no active sessions left, show the just-completed session in read-only mode
         setCurrentSession({ ...currentSession, status: 'completed', endedTime: 'Just now' });
       }
     }
@@ -260,7 +283,7 @@ function ChatInterface() {
             <p className="text-[10px] text-dark/40 uppercase tracking-wider mt-1">Current & Upcoming</p>
           </div>
           
-          <div className="flex-1 overflow-y-auto min-h-0"> {/* min-h-0 is crucial for flex scrolling */}
+          <div className="flex-1 overflow-y-auto min-h-0">
             {activeSessions.map((session) => (
               <button
                 key={session.id}
@@ -305,7 +328,7 @@ function ChatInterface() {
             <p className="text-[10px] text-dark/40 uppercase tracking-wider mt-1">Completed Sessions</p>
           </div>
           
-          <div className="flex-1 overflow-y-auto min-h-0"> {/* Scrollable Area */}
+          <div className="flex-1 overflow-y-auto min-h-0">
             {pastSessions.map((session) => (
               <button
                 key={session.id}
@@ -321,7 +344,7 @@ function ChatInterface() {
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-dark/70 text-sm">{session.userNickname}</h3>
                     <p className="text-[10px] text-dark/40 flex items-center gap-1 mt-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-green-500" /> {session.endedTime}
+                      <CheckCircle2 className="w-3 h-3 text-green-500" /> Ended: {session.endedTime}
                     </p>
                   </div>
                 </div>
@@ -526,7 +549,7 @@ function ChatInterface() {
             </div>
           </div>
 
-          {/* End Session Button */}
+          {/* End Session Button (Only for Active) */}
           <div className="p-6 border-t border-gray-100 bg-gray-50">
             {currentSession.status === 'active' && (
               <button
