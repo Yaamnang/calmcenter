@@ -51,6 +51,16 @@ export const therapists: Therapist[] = [
     language: ['English', 'Dzongkha'],
     availability: 'Mon-Fri, 9AM-5PM'
   },
+    {
+    id: 'T003',
+    name: 'Dr. Nima Dorji',
+    email: 'nima@gmail.com',
+    password: 'nima123',
+    credentials: 'Licensed Clinical Psychologist',
+    specialization: ['Anxiety', 'Depression', 'Trauma'],
+    language: ['English', 'Dzongkha'],
+    availability: 'Mon-Fri, 9AM-5PM'
+  },
   {
     id: 'T002',
     name: 'Dr. Pema Wangmo',
@@ -67,8 +77,8 @@ export const users: User[] = [
   {
     id: 'U001',
     nickname: 'SilentMountain',
-    email: 'user@calm.bt',
-    password: 'user123',
+    email: 'sonamd5dorji@gmail.com',
+    password: '123',
     ageGroup: '18-25',
     language: 'English',
     joinedAt: '2024-01-15'
@@ -77,10 +87,19 @@ export const users: User[] = [
     id: 'U002',
     nickname: 'QuietRiver',
     email: 'quiet@calm.bt',
-    password: 'user123',
+    password: '123',
     ageGroup: '26-35',
     language: 'Dzongkha',
     joinedAt: '2024-02-20'
+  },
+  {
+    id: 'U003',
+    nickname: 'meow',
+    email: 'meow@calm.bt',
+    password: '123',
+    ageGroup: '18-25',
+    language: 'English',
+    joinedAt: '2024-03-01'
   }
 ];
 

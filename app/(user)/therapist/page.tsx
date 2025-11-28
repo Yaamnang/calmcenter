@@ -3,37 +3,35 @@
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import ChatBot from '@/components/ChatBot';
-import { GraduationCap, Languages, Clock, MessageCircle } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import therapist1 from '@/assets/therapist1.jpg';
+import therapist2 from '@/assets/therapist2.jpg';
+import therapist3 from '@/assets/therapist3.jpg';
+import { GraduationCap, Languages, Clock } from 'lucide-react';
 
 export default function TherapistPage() {
   const therapists = [
     {
-      name: "Dr. Tashi Dorji",
+      id: "T001",
+      name: "Dr. Pema Choden",
       specialty: "Anxiety & Depression",
       experience: "12 years",
-      languages: "Dzongkha, English",
-      available: true
+      image: therapist1
     },
     {
-      name: "Dr. Pema Choden",
+      id: "T002",
+      name: "Dr. Tashi Dorji ",
       specialty: "Relationship Counseling",
       experience: "8 years",
-      languages: "Dzongkha, English, Hindi",
-      available: true
+      image: therapist2
     },
     {
-      name: "Dr. Karma Wangchuk",
+      id: "T003",
+      name: "Dr. Tshering Dema",
       specialty: "Stress Management",
       experience: "10 years",
-      languages: "Dzongkha, English",
-      available: false
-    },
-    {
-      name: "Dr. Deki Yangzom",
-      specialty: "Family Therapy",
-      experience: "15 years",
-      languages: "Dzongkha, English",
-      available: true
+      image: therapist3
     }
   ];
 
@@ -42,14 +40,59 @@ export default function TherapistPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative z-10 container mx-auto px-6 pt-32 pb-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold text-dark leading-tight mb-6">
-            Our Therapists
-          </h1>
-          <p className="text-xl text-dark/70 mb-8">
-            Meet our team of licensed mental health professionals dedicated to supporting you
-          </p>
+    
+      {/* Therapists Section */}
+      <section className="relative z-10 container mx-auto px-6 py-20 mt-20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16 text-dark">
+            Meet Our Therapists
+          </h2>
+
+          <div className="flex justify-center items-center gap-12 md:gap-20 flex-wrap">
+            {therapists.map((therapist) => (
+              <Link
+                key={therapist.id}
+                href={`/therapist/${therapist.id}`}
+                className="group cursor-pointer"
+              >
+                <div className="relative">
+                  {/* Circular Image Container */}
+                  <div className="relative w-48 h-48 md:w-56 md:h-56">
+                    {/* Animated Ring */}
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#f17e65] via-[#FF8700] to-[#f17e65] opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-spin-slow"></div>
+
+                    {/* Image Container with padding for ring effect */}
+                    <div className="absolute inset-2 rounded-full overflow-hidden border-4 border-white shadow-2xl group-hover:shadow-[#f17e65]/50 transition-all duration-300 group-hover:scale-105">
+                      <Image
+                        src={therapist.image}
+                        alt={therapist.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        width={224}
+                        height={224}
+                      />
+                    </div>
+
+                    {/* Pulse Effect on Hover */}
+                    <div className="absolute inset-0 rounded-full bg-[#f17e65] opacity-0 group-hover:opacity-20 group-hover:animate-ping"></div>
+                  </div>
+
+                  {/* Therapist Info */}
+                  <div className="mt-6 text-center">
+                    <h3 className="text-xl font-bold text-dark group-hover:text-[#f17e65] transition-colors duration-300">
+                      {therapist.name}
+                    </h3>
+                    <p className="text-dark/70 mt-1">{therapist.specialty}</p>
+                    <p className="text-sm text-dark/50 mt-1">{therapist.experience} experience</p>
+
+                    {/* Click to view details */}
+                    <div className="mt-3 text-[#f17e65] font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      Click to view profile →
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -94,69 +137,21 @@ export default function TherapistPage() {
         </div>
       </section>
 
-      {/* Therapists List */}
-      <section className="relative z-10 container mx-auto px-6 py-20">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 text-dark">
-            Available Therapists
-          </h2>
+      
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {therapists.map((therapist, index) => (
-              <div
-                key={index}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-dark/5 hover:shadow-lg transition-all"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-dark mb-1">{therapist.name}</h3>
-                    <p className="text-accent font-semibold">{therapist.specialty}</p>
-                  </div>
-                  <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                    therapist.available
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-700'
-                  }`}>
-                    {therapist.available ? 'Available' : 'Busy'}
-                  </div>
-                </div>
-
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-2 text-dark/70">
-                    <GraduationCap className="w-5 h-5" />
-                    <span>{therapist.experience} of experience</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-dark/70">
-                    <Languages className="w-5 h-5" />
-                    <span>{therapist.languages}</span>
-                  </div>
-                </div>
-
-                {therapist.available ? (
-                  <button
-                    className="w-full py-3 text-white font-semibold transition-all duration-300 shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2"
-                    style={{
-                      background: '#FF8700',
-                      borderRadius: '0 1rem 0 1rem',
-                      boxShadow: '0 4px 15px rgba(255, 135, 0, 0.3)'
-                    }}
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    Start Chat
-                  </button>
-                ) : (
-                  <button
-                    disabled
-                    className="w-full py-3 bg-gray-200 text-gray-500 font-semibold rounded-xl cursor-not-allowed"
-                  >
-                    Currently Unavailable
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <style jsx>{`
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 3s linear infinite;
+        }
+      `}</style>
 
       {/* How it Works */}
       <section className="relative z-10 container mx-auto px-6 py-20">

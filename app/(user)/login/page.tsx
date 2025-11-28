@@ -8,7 +8,7 @@ import { users } from '@/data/login';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [emailOrNickname, setEmailOrNickname] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -18,10 +18,8 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address');
+    if (!emailOrNickname.trim()) {
+      setError('Please enter your email or nickname');
       return;
     }
 
@@ -29,12 +27,15 @@ export default function LoginPage() {
 
     // Simulate API call and validate against preset data
     setTimeout(() => {
-      const user = users.find(u => u.email === email && u.password === password);
+      const user = users.find(u =>
+        (u.email === emailOrNickname || u.nickname === emailOrNickname) &&
+        u.password === password
+      );
 
       if (user) {
         router.push('/userId/home');
       } else {
-        setError('Invalid email or password');
+        setError('Invalid email/nickname or password');
         setIsLoading(false);
       }
     }, 1000);
@@ -89,16 +90,16 @@ export default function LoginPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Input */}
+            {/* Email or Nickname Input */}
             <div className="relative group">
-              <label className="block text-sm font-semibold text-dark mb-2">Email</label>
+              <label className="block text-sm font-semibold text-dark mb-2">Email or Nickname</label>
               <div className="relative">
                 <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  value={emailOrNickname}
+                  onChange={(e) => setEmailOrNickname(e.target.value)}
                   className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:border-[#f17e65] focus:outline-none transition-all duration-300 text-dark"
-                  placeholder="your@email.com"
+                  placeholder="your@email.com or nickname"
                   required
                 />
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#f17e65]/20 to-[#FF8700]/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />

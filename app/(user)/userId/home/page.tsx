@@ -1,6 +1,7 @@
 'use client';
 
 import Navbar from '@/components/shared/UserNavbar';
+import Footer from '@/components/shared/Footer';
 import ScribbleCanvas from '@/components/animations/ScribbleCanvas';
 import ChatBot from '@/components/ChatBot';
 import Link from 'next/link';
@@ -220,6 +221,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <Footer />
       <ChatBot />
     </main>
   );

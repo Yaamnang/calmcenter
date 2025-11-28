@@ -34,8 +34,8 @@ export default function TherapistSignupPage() {
     if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     if (!formData.licenseNo.trim()) newErrors.licenseNo = 'License number is required';
-    if (!/^BT-MH-\d{4}-\d{3}$/.test(formData.licenseNo)) {
-      newErrors.licenseNo = 'Invalid license format (e.g., BT-MH-2020-001)';
+    if (!/^\d{4}-\d{4}-\d{3}$/.test(formData.licenseNo)) {
+      newErrors.licenseNo = 'License number must be 11 digits (format: XXXX-XXXX-XXX)';
     }
 
     setErrors(newErrors);
@@ -57,9 +57,35 @@ export default function TherapistSignupPage() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: '' });
+    const { name, value } = e.target;
+
+    // Special handling for license number - only numbers with automatic formatting
+    if (name === 'licenseNo') {
+      // Remove all non-digit characters
+      const digitsOnly = value.replace(/\D/g, '');
+
+      // Limit to 11 digits (4 + 4 + 3)
+      const limitedDigits = digitsOnly.slice(0, 11);
+
+      // Format: XXXX-XXXX-XXX
+      let formatted = '';
+      if (limitedDigits.length > 0) {
+        formatted = limitedDigits.slice(0, 4);
+      }
+      if (limitedDigits.length > 4) {
+        formatted += '-' + limitedDigits.slice(4, 8);
+      }
+      if (limitedDigits.length > 8) {
+        formatted += '-' + limitedDigits.slice(8, 11);
+      }
+
+      setFormData({ ...formData, licenseNo: formatted });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' });
     }
   };
 
@@ -190,12 +216,13 @@ export default function TherapistSignupPage() {
                   name="licenseNo"
                   value={formData.licenseNo}
                   onChange={handleChange}
-                  className={`w-full pl-11 pr-4 py-3 border ${errors.licenseNo ? 'border-red-300' : 'border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all`}
-                  placeholder="BT-MH-2020-001"
+                  className={`w-full pl-11 pr-4 py-3 border ${errors.licenseNo ? 'border-red-300' : 'border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all font-mono tracking-wider`}
+                  placeholder="1234-5678-901"
+                  maxLength={13}
                 />
               </div>
               {errors.licenseNo && <p className="text-red-500 text-sm mt-1">{errors.licenseNo}</p>}
-              <p className="text-xs text-dark/50 mt-1">Format: BT-MH-YYYY-XXX</p>
+        
             </div>
 
             {/* Password */}

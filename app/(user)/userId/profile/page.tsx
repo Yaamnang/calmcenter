@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import UserNavbar from '@/components/shared/UserNavbar';
+import Footer from '@/components/shared/Footer';
 import { User, Lock, Shield, FileText, LogOut, Eye, EyeOff, X } from 'lucide-react';
 import { privacyPolicy, termsAndConditions } from '@/data/legal';
 import ChatBot from '@/components/ChatBot';
@@ -262,9 +263,11 @@ export default function UserProfilePage() {
             </div>
           </div>
         </div>
-        
+
       )}
-      
+
+      <Footer />
+
     </main>
   );
 }

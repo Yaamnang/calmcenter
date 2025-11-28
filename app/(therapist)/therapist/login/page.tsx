@@ -51,7 +51,7 @@ export default function TherapistLoginPage() {
             <div className="flex items-center gap-3 mb-6">
               <Image src="/logo.png" alt="Calm Logo" width={56} height={56} className="rounded-2xl" />
               <div>
-                <h1 className="text-3xl font-bold text-dark">Calm</h1>
+             
                 <p className="text-sm text-dark/60">Therapist Portal</p>
               </div>
             </div>
@@ -177,14 +177,6 @@ export default function TherapistLoginPage() {
             </button>
           </form>
 
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-primary/30 rounded-xl border border-accent/20">
-            <p className="text-xs font-semibold text-dark mb-2">Demo Credentials:</p>
-            <div className="text-xs text-dark/70 space-y-1">
-              <p><strong>Email:</strong> tashi@calm.bt</p>
-              <p><strong>Password:</strong> therapist123</p>
-            </div>
-          </div>
 
           <div className="mt-6 text-center">
             <p className="text-dark/60">

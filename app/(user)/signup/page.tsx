@@ -3,16 +3,21 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { X } from 'lucide-react';
 import { privacyPolicy, termsAndConditions } from '@/data/legal';
+import { users } from '@/data/login';
 
 export default function SignupPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nickname: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
+  const [nicknameError, setNicknameError] = useState('');
+  const [nicknameSuggestion, setNicknameSuggestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
@@ -47,7 +52,7 @@ export default function SignupPage() {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      setStep(3); // Success step
+      router.push('/userId/home'); // Redirect to userId/home
     }, 2000);
   };
 
@@ -185,16 +190,63 @@ export default function SignupPage() {
                         <input
                           type="text"
                           value={formData.nickname}
-                          onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-                          className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:border-[#f17e65] focus:outline-none transition-all duration-300 text-dark"
+                          onChange={(e) => {
+                            const nickname = e.target.value;
+                            setFormData({ ...formData, nickname });
+
+                            // Check if nickname is taken
+                            if (nickname.trim()) {
+                              const isTaken = users.some(u => u.nickname.toLowerCase() === nickname.toLowerCase());
+                              if (isTaken) {
+                                setNicknameError(`"${nickname}" is already taken`);
+                                // Suggest alternative for "meow"
+                                if (nickname.toLowerCase() === 'meow') {
+                                  setNicknameSuggestion('meowmeow');
+                                } else {
+                                  setNicknameSuggestion(nickname + Math.floor(Math.random() * 100));
+                                }
+                              } else {
+                                setNicknameError('');
+                                setNicknameSuggestion('');
+                              }
+                            } else {
+                              setNicknameError('');
+                              setNicknameSuggestion('');
+                            }
+                          }}
+                          className={`w-full px-4 py-3 bg-white/50 border-2 ${nicknameError ? 'border-red-300' : 'border-gray-200'} rounded-xl focus:border-[#f17e65] focus:outline-none transition-all duration-300 text-dark`}
                           placeholder="e.g., HappyPanda, CalmButterfly"
                           required
                         />
                         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#f17e65]/20 to-[#FF8700]/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                       </div>
-                      <p className="text-xs text-dark/50 mt-2">
-                        💡 Tip: Choose a fun name - no personal info needed!
-                      </p>
+                      {nicknameError && (
+                        <div className="mt-2">
+                          <p className="text-red-500 text-sm">{nicknameError}</p>
+                          {nicknameSuggestion && (
+                            <p className="text-sm text-dark/70 mt-1">
+                              How about{' '}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setFormData({ ...formData, nickname: nicknameSuggestion });
+                                  setNicknameError('');
+                                  setNicknameSuggestion('');
+                                }}
+                                className="text-[#f17e65] hover:text-[#FF8700] font-semibold underline"
+                              >
+                                {nicknameSuggestion}
+                              </button>
+                              ?
+                            </p>
+                          )}
+                        </div>
+                      )}
+                      {!nicknameError && (
+                        <p className="text-xs text-dark/50 mt-2">
+                          💡 Tip: Choose a fun name - no personal info needed!
+                        </p>
+                      )}
                     </div>
 
                     {/* Nickname suggestions */}
@@ -213,8 +265,8 @@ export default function SignupPage() {
 
                     <button
                       type="button"
-                      onClick={() => formData.nickname && setStep(2)}
-                      disabled={!formData.nickname}
+                      onClick={() => formData.nickname && !nicknameError && setStep(2)}
+                      disabled={!formData.nickname || !!nicknameError}
                       className="w-full py-4 text-white font-semibold transition-all duration-300 shadow-lg hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                       style={{
                         background: 'linear-gradient(135deg, #f17e65 0%, #FF8700 100%)',
